@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chㅇunpersonaㅣwikitampㅣate</title>
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+<style>
+  body {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 0px;
+    font-family: sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* 메인 슬라이드 크기 (세로 이미지 최적화) */
+  .swiper {
+    width: 100%;
+    max-width: 430px;
+    height: 560px; /* 세로 강조 */
+    margin-bottom: 20px;
+  }
+
+  .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* 좌우 화살표 스타일 */
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: black;
+    width: 40px;
+    height: 40px;
+  }
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  /* 썸네일 */
+  .thumbs {
+    height: 100px;
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .thumbs img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    border-radius: 1px;
+  }
+
+  .swiper-slide-thumb-active img {
+    border-color: black;
+  }
+
+  .thumbs .swiper-wrapper {
+    justify-content: center; /* 가운데 정렬 */
+  }
+</style>
+</head>
+<body>
+
+<!-- 메인 이미지 슬라이더 -->
+<div class="swiper mainSwiper">
+  <div class="swiper-wrapper" id="main-wrapper"></div>
+
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+</div>
+
+<!-- 썸네일 슬라이더 -->
+<div class="swiper thumbs">
+  <div class="swiper-wrapper" id="thumb-wrapper"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  /******************************************************
+   *  ★★★ 여기만 수정하면 됨 ★★★
+   *  아래 배열에 이미지 경로만 넣으면 자동 렌더링
+   ******************************************************/
+  const images = [
+    "그레이시아/01통상_미각.png",
+    "그레이시아/01통상_해각.png",
+    "그레이시아/01통상_달각.png",
+    // 원하는 만큼 추가
+  ];
+
+  /* ----------------------------------
+     자동으로 HTML 슬라이드 생성
+  ---------------------------------- */
+  const mainWrapper = document.getElementById("main-wrapper");
+  const thumbWrapper = document.getElementById("thumb-wrapper");
+
+  images.forEach(src => {
+    mainWrapper.innerHTML += `
+      <div class="swiper-slide">
+        <img src="${src}" />
+      </div>
+    `;
+
+    thumbWrapper.innerHTML += `
+      <div class="swiper-slide">
+        <img src="${src}" />
+      </div>
+    `;
+  });
+
+  /* 스와이퍼 초기화 (연결형) */
+  const thumbsSwiper = new Swiper(".thumbs", {
+    slidesPerView: images.length,
+    spaceBetween: 10,
+    watchSlidesProgress: false,
+    centeredSlides: false,
+  });
+
+  const mainSwiper = new Swiper(".mainSwiper", {
+    spaceBetween: 10,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev"
+    },
+    thumbs: {
+      swiper: thumbsSwiper
+    }
+  });
+</script>
+
+</body>
+</html>
